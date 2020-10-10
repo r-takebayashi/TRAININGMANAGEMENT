@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -25,12 +25,18 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import {Calendar} from 'react-native-calendars';
+import CircleButton from 'react-native-circle-button';
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{marginTop: 20}}>
-        <Calendar />
+      <View>
+        <View style={{marginTop: 20}}>
+          <Calendar />
+        </View>
+        <View style={{alignItems:'flex-end', justifyContent:'flex-end'}}>
+          <CircleButton />
+        </View>
       </View>
     );
   }
