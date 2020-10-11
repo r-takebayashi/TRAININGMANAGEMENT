@@ -1,82 +1,16 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import HomeScreen from './screens/HomeScreen';
+import AddDataScreen from './screens/AddDataScreen';
+import {createAppContainer} from '@react-navigation/native';
+import {createStackNavigator} from 'react-navigation-stack';
 
-import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+const AppNavigator = createStackNavigator(
+  {
+    Home: {screen: HomeScreen},
+    AddData: {screen: AddDataScreen},
+  },
+  {
+    initialRouteName: 'Home',
+  },
+);
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-import {Calendar} from 'react-native-calendars';
-import CircleButton from 'react-native-circle-button';
-
-export default class App extends React.Component {
-  render() {
-    return (
-      <View>
-        <View style={{marginTop: 20}}>
-          <Calendar />
-        </View>
-        <View style={{alignItems:'flex-end', justifyContent:'flex-end'}}>
-          <CircleButton />
-        </View>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+export default createAppContainer(AppNavigator);
