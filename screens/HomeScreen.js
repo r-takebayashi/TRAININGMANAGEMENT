@@ -7,30 +7,36 @@
  */
 
 import React from 'react';
-import {StyleSheet, View, Button} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 import {Calendar} from 'react-native-calendars';
-import CircleButton from 'react-native-circle-button';
+import {FAB} from 'react-native-paper';
 
 export default HomeScreen = ({navigation}) => {
   return (
-    <View>
-      <View style={{marginTop: 20}}>
-        <Calendar />
-      </View>
-      <View style={{alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-        <CircleButton />
-      </View>
-      <View>
-        <Button title="Add Data" onPress={() => navigation.navigate('AddData')} />
-      </View>
+    <View style={styles.container}>
+      <Calendar />
+      <FAB
+        style={{
+          position: 'absolute',
+          right: 16,
+          bottom: 16,
+        }}
+        icon="plus"
+        onPress={() => navigation.navigate('AddData')}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   scrollView: {
     backgroundColor: Colors.lighter,
   },
