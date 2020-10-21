@@ -7,29 +7,44 @@
  */
 
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, View} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 import {Calendar} from 'react-native-calendars';
 import {FAB} from 'react-native-paper';
 
-export default HomeScreen = ({navigation}) => {
-  return (
-    <View style={styles.container}>
-      <Calendar />
-      <FAB
-        style={{
-          position: 'absolute',
-          right: 16,
-          bottom: 16,
-        }}
-        icon="plus"
-        onPress={() => navigation.navigate('AddData')}
-      />
-    </View>
-  );
-};
+//export default HomeScreen = ({navigation}) => {
+export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      current: new Date(),
+    };
+  }
+
+  render() {
+    const {navigate} = this.props.navigation;
+    return (
+      <View style={styles.container}>
+        <Calendar />
+        <Text>{this.state.current.toLocaleString()}</Text>
+        <Text>{this.state.current.getFullYear()}</Text>
+        <FAB
+          style={{
+            position: 'absolute',
+            right: 16,
+            bottom: 16,
+          }}
+          icon="plus"
+          onPress={() => navigate('AddData')}
+        />
+      </View>
+    );
+  }
+}
+
+const today = new Date();
 
 const styles = StyleSheet.create({
   container: {
