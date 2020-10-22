@@ -7,12 +7,51 @@
  */
 
 import React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {
+  SafeAreaView,
+  FlatList,
+  Text,
+  StyleSheet,
+  View,
+  StatusBar,
+} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 import {Calendar} from 'react-native-calendars';
 import {FAB} from 'react-native-paper';
+
+const DATES = [];
+const today = new Date();
+
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+];
+
+DATES[0] = today.getFullYear();
+DATES[1] = today.getFullYear();
+DATES[2] = today.getFullYear();
+DATES[3] = today.getFullYear();
+DATES[4] = today.getFullYear();
+DATES[5] = today.getFullYear();
+DATES[6] = today.getFullYear();
+
+const Item = ({title}) => (
+  <View style={styles.item}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+);
 
 //export default HomeScreen = ({navigation}) => {
 export default class HomeScreen extends React.Component {
@@ -25,6 +64,7 @@ export default class HomeScreen extends React.Component {
 
   render() {
     const {navigate} = this.props.navigation;
+    const renderItem = ({item}) => <Item title={item.title} />;
     return (
       <View style={styles.container}>
         <Calendar />
@@ -39,16 +79,22 @@ export default class HomeScreen extends React.Component {
           icon="plus"
           onPress={() => navigate('AddData')}
         />
+        <SafeAreaView style={styles.container2}>
+          <FlatList
+            data={DATA}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
+        </SafeAreaView>
       </View>
     );
   }
 }
 
-const today = new Date();
-
 const styles = StyleSheet.create({
-  container: {
+  container:{
     flex: 1,
+    marginHorizontal: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -87,5 +133,18 @@ const styles = StyleSheet.create({
     padding: 4,
     paddingRight: 12,
     textAlign: 'right',
+  },
+  container2: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  item: {
+    backgroundColor: 'white',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 3,
+  },
+  title: {
+    fontSize: 32,
   },
 });
