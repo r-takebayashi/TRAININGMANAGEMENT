@@ -25,10 +25,15 @@ const DATES = [];
 const today = new Date();
 
 const DATA = [];
-const WeekChars = ["日","月","火","水","木","金","土"];
+const WeekChars = ['日', '月', '火', '水', '木', '金', '土'];
 
 for (let i = 1; i < 30; i++) {
-  DATA.push({id: i.toLocaleString(), title: i.toLocaleString() + '日'});
+  today.setDate(i);
+  DATA.push({
+    id: i.toLocaleString(),
+    calendar_date: today.getDate(i).toLocaleString(),
+    weekday: ' (' + WeekChars[today.getDay()] + ')',
+  });
 }
 const Item = ({title}) => (
   <View style={styles.item}>
@@ -49,7 +54,8 @@ export default class HomeScreen extends React.Component {
     const {navigate} = this.props.navigation;
     const renderItem = ({item}) => (
       <View style={styles.cell}>
-        <Text style={styles.text}>{item.title}</Text>
+        <Text style={styles.text}>{item.calendar_date}</Text>
+        <Text style={styles.text}>{item.weekday}</Text>
       </View>
     );
 
