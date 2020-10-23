@@ -24,29 +24,12 @@ import {FAB} from 'react-native-paper';
 const DATES = [];
 const today = new Date();
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-];
+const DATA = [];
+const WeekChars = ["日","月","火","水","木","金","土"];
 
-DATES[0] = today.getFullYear();
-DATES[1] = today.getFullYear();
-DATES[2] = today.getFullYear();
-DATES[3] = today.getFullYear();
-DATES[4] = today.getFullYear();
-DATES[5] = today.getFullYear();
-DATES[6] = today.getFullYear();
-
+for (let i = 1; i < 30; i++) {
+  DATA.push({id: i.toLocaleString(), title: i.toLocaleString() + '日'});
+}
 const Item = ({title}) => (
   <View style={styles.item}>
     <Text style={styles.title}>{title}</Text>
@@ -64,10 +47,15 @@ export default class HomeScreen extends React.Component {
 
   render() {
     const {navigate} = this.props.navigation;
-    const renderItem = ({item}) => <Item title={item.title} />;
+    const renderItem = ({item}) => (
+      <View style={styles.cell}>
+        <Text style={styles.text}>{item.title}</Text>
+      </View>
+    );
+
     return (
       <View style={styles.container}>
-        <Calendar />
+        {/*<Calendar /> */}
         <Text>{this.state.current.toLocaleString()}</Text>
         <Text>{this.state.current.getFullYear()}</Text>
         <FAB
@@ -81,6 +69,7 @@ export default class HomeScreen extends React.Component {
         />
         <SafeAreaView style={styles.container2}>
           <FlatList
+            style={styles.flatlist_container}
             data={DATA}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
@@ -92,51 +81,17 @@ export default class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
     marginHorizontal: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
   container2: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+    width: '100%',
+    backgroundColor: 'white',
   },
   item: {
     backgroundColor: 'white',
@@ -146,5 +101,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
+  },
+  flatlist_container: {
+    flex: 1,
+    marginTop: 20,
+  },
+  cell: {
+    flexDirection: 'row',
+    borderStyle: 'solid',
+    borderWidth: 0.5,
+    borderColor: '#bbb',
+  },
+  text: {
+    padding: 10,
+    fontSize: 18,
   },
 });
