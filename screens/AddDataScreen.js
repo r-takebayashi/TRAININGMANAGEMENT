@@ -1,11 +1,26 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Button, TextInput, Text} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Button,
+  TextInput,
+  Text,
+  AsyncStorage,
+  Alert,
+} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-import CircleButton from 'react-native-circle-button';
-
 export default class AddDataScreen extends Component {
+  storeData = async (name) => {
+    try {
+      await AsyncStorage.setItem('name', name);
+    } catch (error) {
+      console.log(error);
+    }
+    Alert.alert(name + ': stored');
+  };
+
   render() {
     return (
       <View style={{flex: 1}}>
@@ -33,14 +48,23 @@ export default class AddDataScreen extends Component {
           />
         </View>
         <View style={{flex: 2}}>
-          <Button title="Add Data" />
-        </View>
-        <View
-          style={{flex: 3, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-          <CircleButton
-            onPress={() => this.props.navigation.navigate('Home')}
+          <Button
+            onPress={() => this.storeData('Tanaka')}
+            title="Add Data"
+            color="#841584"
+            style={{
+              position: 'absolute',
+              right: 16,
+              bottom: 16,
+            }}
           />
         </View>
+        <View
+          style={{
+            flex: 3,
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+          }}></View>
       </View>
     );
   }

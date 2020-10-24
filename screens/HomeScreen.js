@@ -14,14 +14,13 @@ import {
   StyleSheet,
   View,
   StatusBar,
+  Button,
+  AsyncStorage,
+  Alert,
 } from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-
-import {Calendar} from 'react-native-calendars';
 import {FAB} from 'react-native-paper';
 
-const DATES = [];
 const today = new Date();
 
 const DATA = [];
@@ -35,11 +34,6 @@ for (let i = 1; i < 30; i++) {
     weekday: ' (' + WeekChars[today.getDay()] + ')',
   });
 }
-const Item = ({title}) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
 
 //export default HomeScreen = ({navigation}) => {
 export default class HomeScreen extends React.Component {
@@ -50,11 +44,20 @@ export default class HomeScreen extends React.Component {
     };
   }
 
+  getData = async () => {
+    const value = await AsyncStorage.getItem('name');
+    if (value !== null) {
+      Alert.alert('We have ' + value);
+    } else {
+      Alert.alert('We have no data');
+    }
+  };
+
   render() {
     const {navigate} = this.props.navigation;
     const renderItem = ({item}) => (
       <View style={styles.cell}>
-        <View style={{width: 40, alignItems: 'center'}}>
+        <View style={{width: 41, alignItems: 'center'}}>
           <Text style={styles.text}>{item.calendar_date}</Text>
         </View>
         <View style={{width: 55, alignItems: 'center'}}>
@@ -66,8 +69,12 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         {/*<Calendar /> */}
-        <Text>{this.state.current.toLocaleString()}</Text>
-        <Text>{this.state.current.getFullYear()}</Text>
+        <View>
+          <Text style={{fontSize: 20}}>
+            {this.state.current.getFullYear()}年{this.state.current.getMonth()}
+            月
+          </Text>
+        </View>
         <FAB
           style={{
             position: 'absolute',
@@ -76,6 +83,26 @@ export default class HomeScreen extends React.Component {
           }}
           icon="plus"
           onPress={() => navigate('AddData')}
+        />
+        <Button
+          onPress={() => navigate('AddData')}
+          title="Add Data"
+          color="#841584"
+          style={{
+            position: 'absolute',
+            right: 16,
+            bottom: 16,
+          }}
+        />
+        <Button
+          onPress={() => this.getData()}
+          title="Get Data"
+          color="#841584"
+          style={{
+            position: 'absolute',
+            right: 16,
+            bottom: 16,
+          }}
         />
         <SafeAreaView style={styles.container2}>
           <FlatList
