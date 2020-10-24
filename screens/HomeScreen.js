@@ -54,8 +54,12 @@ export default class HomeScreen extends React.Component {
     const {navigate} = this.props.navigation;
     const renderItem = ({item}) => (
       <View style={styles.cell}>
-        <Text style={styles.text}>{item.calendar_date}</Text>
-        <Text style={styles.text}>{item.weekday}</Text>
+        <View style={{width: 40, alignItems: 'center'}}>
+          <Text style={styles.text}>{item.calendar_date}</Text>
+        </View>
+        <View style={{width: 55, alignItems: 'center'}}>
+          <Text style={styles.text}>{item.weekday}</Text>
+        </View>
       </View>
     );
 
