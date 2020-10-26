@@ -44,10 +44,15 @@ export default class HomeScreen extends React.Component {
     };
   }
 
+  componentWillMount() {
+    this.getData();
+  }
+
   getData = async () => {
-    const value = await AsyncStorage.getItem('name');
+    const value = await AsyncStorage.getItem('20200902');
     if (value !== null) {
       Alert.alert('We have ' + value);
+      this.setState({count: value});
     } else {
       Alert.alert('We have no data');
     }
@@ -62,6 +67,12 @@ export default class HomeScreen extends React.Component {
         </View>
         <View style={{width: 55, alignItems: 'center'}}>
           <Text style={styles.text}>{item.weekday}</Text>
+        </View>
+        <View>
+          <Text style={styles.text}>腕立て</Text>
+        </View>
+        <View style={{alignItems: 'center'}}>
+          <Text style={styles.text}>{this.state.count}</Text>
         </View>
       </View>
     );
