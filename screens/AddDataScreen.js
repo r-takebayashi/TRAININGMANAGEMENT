@@ -12,6 +12,10 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 export default class AddDataScreen extends Component {
+  state = {
+    count: '',
+  };
+
   storeData = async (datetime, name) => {
     try {
       await AsyncStorage.setItem(datetime, name);
@@ -19,6 +23,10 @@ export default class AddDataScreen extends Component {
       console.log(error);
     }
     Alert.alert(name + ': stored');
+  };
+
+  buttonClickListner = (e) => {
+    this.storeData('20200902', this.state.count);
   };
 
   render() {
@@ -43,13 +51,16 @@ export default class AddDataScreen extends Component {
               borderWidth: 2,
               textAlign: 'center',
             }}
-            value=""
+            value={this.state.count}
+            onChangeText={(val) => {
+              this.setState({count: val});
+            }}
             placeholder="回数"
           />
         </View>
         <View style={{flex: 2}}>
           <Button
-            onPress={() => this.storeData('20200902', '40')}
+            onPress={this.buttonClickListner}
             title="Add Data"
             color="#841584"
             style={{
