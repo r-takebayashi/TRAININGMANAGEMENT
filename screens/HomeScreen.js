@@ -22,16 +22,19 @@ import {
 import {FAB} from 'react-native-paper';
 
 const today = new Date();
-
+var dt = new Date();
+const lastDate = new Date(dt.getFullYear(), dt.getMonth() + 1, 0);
+const lastDateNum = lastDate.getDate();
 const DATA = [];
 const WeekChars = ['日', '月', '火', '水', '木', '金', '土'];
 
-for (let i = 1; i < 30; i++) {
+for (let i = 1; i < lastDateNum; i++) {
   today.setDate(i);
   DATA.push({
     id: i.toLocaleString(),
     calendar_date: today.getDate(i).toLocaleString(),
     weekday: ' (' + WeekChars[today.getDay()] + ')',
+    count: i+1,
   });
 }
 
@@ -51,10 +54,8 @@ export default class HomeScreen extends React.Component {
   getData = async () => {
     const value = await AsyncStorage.getItem('20200902');
     if (value !== null) {
-      Alert.alert('We have ' + value);
       this.setState({count: value});
     } else {
-      Alert.alert('We have no data');
     }
   };
 
@@ -72,7 +73,7 @@ export default class HomeScreen extends React.Component {
           <Text style={styles.text}>腕立て</Text>
         </View>
         <View style={{alignItems: 'center'}}>
-          <Text style={styles.text}>{this.state.count}</Text>
+          <Text style={styles.text}>{item.count}</Text>
         </View>
       </View>
     );
